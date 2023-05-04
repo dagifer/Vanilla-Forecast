@@ -18,31 +18,36 @@
     <div class="container">
         <div class="wrapperApp">
         <div class="app">
-            <form class="search-form">
+            <form id="search-form">
                 <div class="row">
                     <div class="col-9">
-                        <input type="search" placeholder="New city" class="form-control" id="city"/> 
+                        <input type="search" placeholder="New city" class="form-control" id="city-input"/> 
                     </div>
                     <div class="col-3">
                         <input type="submit" value="Search" class="btn btn-primary"/>
-                    </div>
-                    </div>
-                </div>
-            </form>
+                    </div>           
       <h1 id="city"> </h1>
       <ul>
-        <li>current-Date</li>
-        <li> description</li>
+        <li id="date"></li>
+        <li id="description"></li>
       </ul>
+    </div>
+            </div>
+            </form>
         <div class="row">
             <div class="col-6">
-                <img src="https://ssl.gstatic.com/onebox/weather/64/cloudy.png" alt="cloudy" />°C
+                <div class="d-flex weather-temperature">
+                <img src="#" alt="cloudy" id="icon" />
+                <div>
+                    <Strong id="temperature"></Strong>°C
+                </div>
             </div>
+        </div>
             <div class="col-6">
         <ul>
-            <li>Feel like:</li>
-            <li> Humidity:% </li>
-            <li> Wind : </li>
+            <li>Feel like: <span id="feelsLike"></span></li>
+            <li>Humidity: <span id="humidity"></span>%</li>
+            <li>Wind: <span id="wind"></span></li>
         </ul>   
             </div>
         <div class="weather-preditions">
