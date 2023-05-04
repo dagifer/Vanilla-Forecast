@@ -42,8 +42,26 @@ let month = months[now.getMonth()];
 let currentDay = document.querySelector("#date");
 currentDay.innerHTML = `${day}, ${month} ${hours}:${minutes} `;
 
-let form = document.querySelector("#search-form");
-form.addEventListener("submit", handleSubmit);
+function showPreditions() {
+  let preditions = document.querySelector("#forecast-preditions");
+
+  let preditionsHTML = `<div class="row">`;
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  preditionsHTML =
+    preditionsHTML +
+    `
+                <div class="col-3">
+                    <div class="weather-preditions-date">Wed</div>
+                    <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/few-clouds-day.png" alt="" width="36"/>
+                    <div class="weather-preditions-temperature">
+                    <span class="preditions-temperature-max">11°</span>
+                    <span class="preditions-temperature-min">05°</span>
+                    </div>
+                </div>
+            `;
+  preditionsHTML = preditionsHTML + `</div>`;
+  preditions.innerHTML = preditionsHTML;
+}
 
 function handleSubmit(event) {
   event.preventDefault();
@@ -90,4 +108,8 @@ function showLocation(coordinates) {
   console.log(apiUrl);
 }
 
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
+
 searchCity("Edinburgh");
+showPreditions();
