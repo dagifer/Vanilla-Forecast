@@ -42,7 +42,8 @@ let month = months[now.getMonth()];
 let currentDay = document.querySelector("#date");
 currentDay.innerHTML = `${day}, ${month} ${hours}:${minutes} `;
 
-function showPreditions() {
+function showPreditions(response) {
+  console.log(response.data);
   let preditions = document.querySelector("#forecast-preditions");
 
   let preditionsHTML = `<div class="row">`;
@@ -116,4 +117,3 @@ let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
 
 searchCity("Edinburgh");
-showPreditions();
