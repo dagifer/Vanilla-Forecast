@@ -46,12 +46,14 @@ function showPreditions() {
   let preditions = document.querySelector("#forecast-preditions");
 
   let preditionsHTML = `<div class="row">`;
-  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  preditionsHTML =
-    preditionsHTML +
-    `
+  let days = ["Sun", "Mon", "Tue", "Wed"];
+
+  days.forEach(function (day) {
+    preditionsHTML =
+      preditionsHTML +
+      `
                 <div class="col-3">
-                    <div class="weather-preditions-date">Wed</div>
+                    <div class="weather-preditions-date">${day}</div>
                     <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/few-clouds-day.png" alt="" width="36"/>
                     <div class="weather-preditions-temperature">
                     <span class="preditions-temperature-max">11°</span>
@@ -59,6 +61,7 @@ function showPreditions() {
                     </div>
                 </div>
             `;
+  });
   preditionsHTML = preditionsHTML + `</div>`;
   preditions.innerHTML = preditionsHTML;
 }
@@ -106,6 +109,7 @@ function showLocation(coordinates) {
   let apiKey = "o36b6dafeb6ef56f34fa0t0eceebce4e";
   let apiUrl = `https://api.shecodes.io/weather/v1/forecast?lat=${coordinates.lat}&lon=${coordinates.lon}=${apiKey}&units=metric`;
   console.log(apiUrl);
+  axios.get(`${apiUrl}`).then(showPreditions);
 }
 
 let form = document.querySelector("#search-form");
