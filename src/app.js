@@ -42,26 +42,43 @@ let month = months[now.getMonth()];
 let currentDay = document.querySelector("#date");
 currentDay.innerHTML = `${day}, ${month} ${hours}:${minutes} `;
 
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[day];
+}
+
 function showPreditions(response) {
-  console.log(response.data);
+  let forecast = response.data.daily;
   let preditions = document.querySelector("#forecast-preditions");
 
   let preditionsHTML = `<div class="row">`;
-  let days = ["Sun", "Mon", "Tue", "Wed"];
 
-  days.forEach(function (day) {
-    preditionsHTML =
-      preditionsHTML +
-      `
+  forecast.forEach(function (forecastDay, index) {
+    if (index > 2) {
+      preditionsHTML =
+        preditionsHTML +
+        `
                 <div class="col-3">
-                    <div class="weather-preditions-date">${day}</div>
-                    <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/few-clouds-day.png" alt="" width="36"/>
+                    <div class="weather-preditions-date">${formatDay(
+                      forecastDay.time
+                    )}</div>
+                    <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${
+                      forecastDay.condition.icon
+                    }.png" alt="" width="36"/>
                     <div class="weather-preditions-temperature">
-                    <span class="preditions-temperature-max">11°</span>
-                    <span class="preditions-temperature-min">05°</span>
+                    <span class="preditions-temperature-max">${Math.round(
+                      forecastDay.temperature.maximum
+                    )}°</span>
+                    <span class="preditions-temperature-min">${Math.round(
+                      forecastDay.temperature.minimum
+                    )}°</span>
                     </div>
                 </div>
             `;
+    }
   });
   preditionsHTML = preditionsHTML + `</div>`;
   preditions.innerHTML = preditionsHTML;
@@ -98,6 +115,7 @@ function showWeatherApp(response) {
   document
     .querySelector("#icon")
     .setAttribute("alt", response.data.condition.description);
+  showLocation(response.data.coordinates);
 }
 
 function searchCity(city) {
@@ -108,7 +126,7 @@ function searchCity(city) {
 
 function showLocation(coordinates) {
   let apiKey = "o36b6dafeb6ef56f34fa0t0eceebce4e";
-  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?lat=${coordinates.lat}&lon=${coordinates.lon}=${apiKey}&units=metric`;
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?lat=${coordinates.latitude}&lon=${coordinates.longitude}&key=${apiKey}&units=metric`;
   console.log(apiUrl);
   axios.get(`${apiUrl}`).then(showPreditions);
 }
